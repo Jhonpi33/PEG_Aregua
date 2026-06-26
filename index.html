@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Areagua — Tejeduría artesanal en fique · Curití, Santander</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────────── */
+    :root {
+      --vino:       #7A3B3B;
+      --vino-deep:  #5C2A2A;
+      --vino-light: #9E5050;
+      --beige:      #E8DCC8;
+      --beige-dark: #D6C8AD;
+      --crema:      #F5F0E8;
+      --fique:      #8B6F47;
+      --fique-dark: #6B4F35;
+      --tierra:     #3D2B1A;
+      --ink:        #2C2418;
+      --ink-light:  #5C4A3A;
+      --white-warm: #FDFAF5;
+
+      --serif: 'Fraunces', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+
+      --radius: 2px;
+      --transition: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      font-size: 16px;
+      color: var(--ink);
+      background: var(--crema);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── ZIGZAG PATTERN (signature element) ─────────────────────── */
+    .zigzag-divider {
+      width: 100%;
+      height: 24px;
+      background-image:
+        linear-gradient(135deg, var(--beige) 25%, transparent 25%) -12px 0,
+        linear-gradient(225deg, var(--beige) 25%, transparent 25%) -12px 0,
+        linear-gradient(315deg, var(--beige) 25%, transparent 25%),
+        linear-gradient(45deg,  var(--beige) 25%, transparent 25%);
+      background-size: 24px 24px;
+      background-color: var(--crema);
+    }
+    .zigzag-divider.inv {
+      background-image:
+        linear-gradient(135deg, var(--crema) 25%, transparent 25%) -12px 0,
+        linear-gradient(225deg, var(--crema) 25%, transparent 25%) -12px 0,
+        linear-gradient(315deg, var(--crema) 25%, transparent 25%),
+        linear-gradient(45deg,  var(--crema) 25%, transparent 25%);
+      background-color: var(--beige);
+    }
+    .zigzag-divider.dark {
+      background-image:
+        linear-gradient(135deg, var(--fique-dark) 25%, transparent 25%) -12px 0,
+        linear-gradient(225deg, var(--fique-dark) 25%, transparent 25%) -12px 0,
+        linear-gradient(315deg, var(--fique-dark) 25%, transparent 25%),
+        linear-gradient(45deg,  var(--fique-dark) 25%, transparent 25%);
+      background-color: var(--crema);
+    }
+
+    /* ─── SCROLL ANIMATIONS ───────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white-warm);
+      border-bottom: 1px solid var(--beige-dark);
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      transition: box-shadow var(--transition);
+    }
+    .navbar.scrolled { box-shadow: 0 2px 16px rgba(44,36,24,0.08); }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .nav-logo-wordmark {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.7rem;
+      color: var(--vino);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .nav-logo-tagline {
+      font-size: 0.6rem;
+      color: var(--fique);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    /* Zigzag mini pattern inline */
+    .nav-logo-pattern {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .nav-logo-pattern span {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-right: 1.5px solid var(--vino);
+      border-bottom: 1.5px solid var(--vino);
+      transform: rotate(-45deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--vino);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--vino); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-instagram {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--fique);
+      letter-spacing: 0.05em;
+      transition: color var(--transition);
+    }
+    .nav-instagram:hover { color: var(--vino); }
+    .nav-instagram svg { width: 15px; height: 15px; }
+
+    .btn-primary {
+      background: var(--vino);
+      color: var(--white-warm);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      background: var(--vino-deep);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--vino);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      border: 1.5px solid var(--vino);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover {
+      background: var(--vino);
+      color: var(--white-warm);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--ink);
+      transition: all var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--beige);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-menu.open { display: flex; opacity: 1; }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--vino);
+      font-weight: 300;
+    }
+    .mobile-menu a:hover { color: var(--vino-deep); }
+    .mobile-menu .mobile-insta {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-style: normal;
+      color: var(--fique);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .mobile-menu .mobile-cta {
+      margin-top: 1rem;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--tierra);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        /* texture woven pattern overlay */
+        repeating-linear-gradient(
+          45deg,
+          rgba(139,111,71,0.07) 0px,
+          rgba(139,111,71,0.07) 1px,
+          transparent 1px,
+          transparent 12px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(139,111,71,0.07) 0px,
+          rgba(139,111,71,0.07) 1px,
+          transparent 1px,
+          transparent 12px
+        ),
+        linear-gradient(160deg, #3D2B1A 0%, #2C1A0E 50%, #4A3020 100%);
+    }
+
+    /* Placeholder image note */
+    .hero-img-placeholder {
+      position: absolute;
+      inset: 0;
+      background: var(--fique-dark);
+      opacity: 0.18;
+      /* Replace with: background-image: url('tu-foto-de-fique.jpg'); background-size: cover; */
+    }
+    .hero-img-placeholder::after {
+      content: '[ Aquí va tu foto de fondo: alfombra de fique o taller ]';
+      position: absolute;
+      bottom: 1.5rem; right: 1.5rem;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.05em;
+      font-family: var(--sans);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 6rem 5vw 4rem;
+      max-width: 720px;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--beige-dark);
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--beige-dark);
+      opacity: 0.5;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.08;
+      color: var(--beige);
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--beige-dark);
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--beige-dark);
+      opacity: 0.75;
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-ctas .btn-primary { font-size: 0.75rem; padding: 0.75rem 1.5rem; }
+    .hero-ctas .btn-secondary {
+      border-color: rgba(232,220,200,0.4);
+      color: var(--beige);
+      font-size: 0.75rem;
+      padding: 0.75rem 1.5rem;
+    }
+    .hero-ctas .btn-secondary:hover {
+      background: rgba(232,220,200,0.1);
+      border-color: var(--beige-dark);
+      color: var(--beige);
+    }
+
+    /* Decorative zigzag corner */
+    .hero-zigzag-corner {
+      position: absolute;
+      bottom: 60px; right: 5vw;
+      z-index: 2;
+      opacity: 0.18;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+    }
+    .hero-zigzag-corner .zz-row {
+      display: flex;
+    }
+    .hero-zigzag-corner .zz-cell {
+      width: 18px; height: 18px;
+      border-right: 1px solid var(--beige);
+      border-bottom: 1px solid var(--beige);
+    }
+    .hero-zigzag-corner .zz-cell:nth-child(odd) {
+      transform: rotate(90deg);
+    }
+
+    /* ─── SECTION COMMONS ─────────────────────────────────────────── */
+    section { padding: 5rem 5vw; }
+    .section-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--vino);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+    .section-title em { font-style: italic; color: var(--vino); }
+    .section-body {
+      color: var(--ink-light);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    /* ─── FUNDADORA ───────────────────────────────────────────────── */
+    #nosotros { background: var(--crema); }
+    .fundadora-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .fundadora-photo-wrap {
+      position: relative;
+    }
+    .fundadora-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--beige);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .fundadora-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(139,111,71,0.08) 0px, rgba(139,111,71,0.08) 1px,
+          transparent 1px, transparent 24px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(139,111,71,0.08) 0px, rgba(139,111,71,0.08) 1px,
+          transparent 1px, transparent 24px
+        );
+    }
+    .photo-placeholder-label {
+      text-align: center;
+      color: var(--fique);
+      opacity: 0.6;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      z-index: 1;
+      padding: 2rem;
+    }
+    .photo-placeholder-label p:first-child {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .fundadora-medal {
+      position: absolute;
+      bottom: -1.25rem; right: -1.25rem;
+      width: 80px; height: 80px;
+      background: var(--vino);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 0.75rem;
+      box-shadow: 0 4px 16px rgba(122,59,59,0.3);
+    }
+    .fundadora-medal span {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--beige);
+      line-height: 1.3;
+    }
+    .fundadora-medal .medal-icon { font-size: 1.1rem; margin-bottom: 2px; }
+
+    .fundadora-content { padding-top: 0.5rem; }
+    .fundadora-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fique-dark);
+      background: var(--beige);
+      border: 1px solid var(--beige-dark);
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+    }
+    .pull-quote {
+      position: relative;
+      padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+      margin: 2.5rem 0;
+      border-left: 3px solid var(--vino);
+      background: var(--beige);
+    }
+    .pull-quote::before {
+      content: '\201C';
+      position: absolute;
+      top: -0.75rem; left: 0.75rem;
+      font-family: var(--serif);
+      font-size: 4rem;
+      color: var(--vino);
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .pull-quote p {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fique);
+    }
+    .fundadora-text { color: var(--ink-light); line-height: 1.85; font-size: 0.95rem; margin-bottom: 1.25rem; }
+
+    /* ─── PRODUCTOS ───────────────────────────────────────────────── */
+    #productos { background: var(--beige); }
+    .productos-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .productos-intro { max-width: 420px; }
+
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--white-warm);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(44,36,24,0.12);
+    }
+    .product-card-img {
+      aspect-ratio: 4/3;
+      background: var(--beige-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-card-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(139,111,71,0.12) 0px, rgba(139,111,71,0.12) 1px,
+          transparent 1px, transparent 16px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(139,111,71,0.12) 0px, rgba(139,111,71,0.12) 1px,
+          transparent 1px, transparent 16px
+        );
+    }
+    .product-card-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(44,36,24,0);
+      transition: background var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-card:hover .product-card-img-overlay {
+      background: rgba(44,36,24,0.18);
+    }
+    .product-card-img-overlay span {
+      opacity: 0;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-warm);
+      border: 1px solid rgba(255,255,255,0.6);
+      padding: 0.4rem 0.8rem;
+      transition: opacity var(--transition);
+    }
+    .product-card:hover .product-card-img-overlay span { opacity: 1; }
+    .product-placeholder-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+      z-index: 1;
+    }
+    .product-card-body { padding: 1.25rem; }
+    .product-card-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+    .product-card-desc {
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .product-card-tag {
+      display: inline-block;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--vino);
+      background: rgba(122,59,59,0.08);
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+    .product-card-cta {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--vino);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: gap var(--transition);
+    }
+    .product-card:hover .product-card-cta { gap: 0.6rem; }
+    .productos-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--beige-dark);
+    }
+    .productos-footer p {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    /* ─── PROCESO ─────────────────────────────────────────────────── */
+    #proceso { background: var(--crema); }
+    .proceso-header { max-width: 560px; margin-bottom: 4rem; }
+    .proceso-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .proceso-steps::before {
+      content: '';
+      position: absolute;
+      top: 52px;
+      left: calc(10% + 1rem);
+      right: calc(10% + 1rem);
+      height: 1px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--beige-dark) 0px, var(--beige-dark) 8px,
+        transparent 8px, transparent 16px
+      );
+    }
+    .proceso-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .proceso-step-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: 2px solid var(--beige-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .proceso-step:hover .proceso-step-icon {
+      background: var(--vino);
+      border-color: var(--vino);
+    }
+    .proceso-step-num {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--vino);
+      margin-bottom: 0.4rem;
+    }
+    .proceso-step-title {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .proceso-step-desc {
+      font-size: 0.75rem;
+      color: var(--ink-light);
+      line-height: 1.65;
+    }
+
+    /* Tinturado highlight */
+    .tinturado-callout {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      background: var(--tierra);
+      border-radius: var(--radius);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .tinturado-callout-text {}
+    .tinturado-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--beige-dark);
+      opacity: 0.6;
+      margin-bottom: 0.75rem;
+    }
+    .tinturado-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--beige);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .tinturado-body { color: var(--beige-dark); opacity: 0.75; font-size: 0.88rem; line-height: 1.8; }
+    .tinturado-quote {
+      padding: 2rem;
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid var(--vino-light);
+    }
+    .tinturado-quote p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--beige);
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+    .tinturado-quote small {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--beige-dark);
+      opacity: 0.5;
+    }
+
+    /* ─── CONTACTO ────────────────────────────────────────────────── */
+    #contacto { background: var(--fique-dark); padding: 5rem 5vw; }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .contacto-info .section-title { color: var(--beige); }
+    .contacto-info .section-eyebrow { color: var(--beige-dark); opacity: 0.6; }
+    .contacto-info p { color: var(--beige-dark); opacity: 0.7; font-size: 0.9rem; line-height: 1.8; margin-bottom: 2rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--beige-dark);
+      font-size: 0.875rem;
+    }
+    .contact-item-icon {
+      width: 36px; height: 36px;
+      background: rgba(232,220,200,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .contact-item a { color: var(--beige-dark); transition: color var(--transition); }
+    .contact-item a:hover { color: var(--beige); }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--beige-dark);
+      opacity: 0.6;
+    }
+    .form-input,
+    .form-textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(232,220,200,0.2);
+      border-radius: var(--radius);
+      color: var(--beige);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color var(--transition);
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(232,220,200,0.3); }
+    .form-input:focus,
+    .form-textarea:focus { border-color: rgba(122,59,59,0.6); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .btn-submit {
+      background: var(--vino);
+      color: var(--white-warm);
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition);
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--vino-deep); }
+
+    /* Map placeholder */
+    .map-placeholder {
+      margin-top: 4rem;
+      height: 200px;
+      background: rgba(0,0,0,0.2);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: var(--beige-dark);
+      opacity: 0.5;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .map-placeholder span:first-child { font-size: 1.5rem; }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    footer {
+      background: var(--tierra);
+      padding: 3rem 5vw 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(232,220,200,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .footer-brand {}
+    .footer-logo-wordmark {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.6rem;
+      color: var(--beige);
+      letter-spacing: -0.02em;
+    }
+    .footer-logo-tagline {
+      font-size: 0.6rem;
+      color: var(--beige-dark);
+      opacity: 0.5;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .footer-brand-desc {
+      font-size: 0.8rem;
+      color: var(--beige-dark);
+      opacity: 0.55;
+      line-height: 1.75;
+    }
+    .footer-nav-title,
+    .footer-contact-title {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--beige-dark);
+      opacity: 0.45;
+      margin-bottom: 1rem;
+    }
+    .footer-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-nav-links a {
+      font-size: 0.82rem;
+      color: var(--beige-dark);
+      opacity: 0.6;
+      transition: opacity var(--transition);
+    }
+    .footer-nav-links a:hover { opacity: 1; }
+    .footer-contact-items { display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-contact-item {
+      font-size: 0.78rem;
+      color: var(--beige-dark);
+      opacity: 0.55;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      line-height: 1.4;
+    }
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .footer-social a {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(232,220,200,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--beige-dark);
+      opacity: 0.6;
+      transition: opacity var(--transition), background var(--transition);
+    }
+    .footer-social a:hover { opacity: 1; background: rgba(122,59,59,0.4); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-bottom-credit {
+      font-size: 0.7rem;
+      color: var(--beige-dark);
+      opacity: 0.35;
+      font-style: italic;
+    }
+    .footer-bottom-rights {
+      font-size: 0.65rem;
+      color: var(--beige-dark);
+      opacity: 0.25;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── WHATSAPP FLOATING ───────────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 200;
+      width: 52px; height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .wa-float:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.45);
+    }
+    .wa-float svg { width: 26px; height: 26px; fill: white; }
+
+    /* ─── LIGHTBOX ────────────────────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(44,36,24,0.92);
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      max-width: 480px;
+      width: 90%;
+      background: var(--crema);
+      padding: 2rem;
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--ink-light);
+    }
+    .lightbox h3 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .lightbox p { font-size: 0.85rem; color: var(--ink-light); line-height: 1.7; margin-bottom: 1.5rem; }
+    .lightbox .btn-primary { width: 100%; justify-content: center; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .productos-grid { grid-template-columns: repeat(2, 1fr); }
+      .proceso-steps { grid-template-columns: repeat(3, 1fr); }
+      .proceso-steps::before { display: none; }
+      .tinturado-callout { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 4vw; }
+      .nav-links, .nav-right { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 3.5rem 5vw; }
+
+      .hero { min-height: 85vh; }
+      .hero-content { padding: 4rem 5vw 3rem; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .hero-zigzag-corner { display: none; }
+
+      .fundadora-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .fundadora-medal { width: 64px; height: 64px; }
+
+      .productos-grid { grid-template-columns: 1fr; }
+      .productos-header { flex-direction: column; align-items: flex-start; }
+
+      .proceso-steps {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+      .proceso-step {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
+      .proceso-step-icon { margin-bottom: 0; flex-shrink: 0; }
+      .proceso-step-content {}
+
+      .contacto-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ───────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <a href="#inicio" class="nav-logo" aria-label="Areagua inicio">
+      <div class="nav-logo-pattern">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="nav-logo-wordmark">areagua</div>
+      <div class="nav-logo-tagline">Manos con amor y tradición</div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://instagram.com/areaguafique" target="_blank" rel="noopener" class="nav-instagram" aria-label="Instagram @areaguafique">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
+        @areaguafique
+      </a>
+      <a href="#contacto" class="btn-primary">Agenda tu visita</a>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile overlay menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
+    <a href="#inicio" class="mobile-nav-link">Inicio</a>
+    <a href="#nosotros" class="mobile-nav-link">Nosotros</a>
+    <a href="#productos" class="mobile-nav-link">Productos</a>
+    <a href="#proceso" class="mobile-nav-link">Proceso</a>
+    <a href="#contacto" class="mobile-nav-link">Contacto</a>
+    <a href="https://instagram.com/areaguafique" target="_blank" class="mobile-insta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+      </svg>
+      @areaguafique
+    </a>
+    <a href="#contacto" class="btn-primary mobile-cta">Agenda tu visita</a>
+  </div>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────────── -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-img-placeholder"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow fade-up">Curití, Santander, Colombia</p>
+      <h1 class="hero-title fade-up">
+        Tejido a mano.<br><em>Hilado con historia.</em>
+      </h1>
+      <p class="hero-subtitle fade-up">
+        Areagua es un taller artesanal de fique fundado por la maestra María Patrocinio Pimiento Ortiz.
+        Cada alfombra y butaca lleva más de tres décadas de oficio, tintes naturales y el paisaje de Curití.
+      </p>
+      <div class="hero-ctas fade-up">
+        <a href="#productos" class="btn-primary">Ver productos</a>
+        <a href="#nosotros" class="btn-secondary">Conócenos</a>
+      </div>
+    </div>
+
+    <!-- Decorative woven corner -->
+    <div class="hero-zigzag-corner" aria-hidden="true">
+      <div class="zz-row"><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div></div>
+      <div class="zz-row"><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div></div>
+      <div class="zz-row"><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div></div>
+      <div class="zz-row"><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div></div>
+      <div class="zz-row"><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div><div class="zz-cell"></div></div>
+    </div>
+  </section>
+
+  <div class="zigzag-divider" aria-hidden="true"></div>
+
+  <!-- ─── NOSOTROS / FUNDADORA ──────────────────────────────────────── -->
+  <section id="nosotros">
+    <div class="fundadora-grid">
+      <div class="fundadora-photo-wrap fade-up">
+        <div class="fundadora-photo" role="img" aria-label="Foto de María Patrocinio Pimiento Ortiz">
+          <!-- Reemplaza este contenido con: <img src="foto-maria.jpg" alt="María Patrocinio Pimiento Ortiz" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"> -->
+          <div class="photo-placeholder-label">
+            <p>🧵</p>
+            <p>[ Aquí va la foto retrato de<br><strong>María Patrocinio</strong><br>en su taller ]</p>
+          </div>
+        </div>
+        <div class="fundadora-medal" aria-label="Medalla a la Maestría Artesanal">
+          <span class="medal-icon">🏅</span>
+          <span>Medalla Maestría Artesanal</span>
+          <!-- Reemplaza con: <img src="medalla.png" alt="Medalla a la Maestría Artesanal"> -->
+        </div>
+      </div>
+
+      <div class="fundadora-content fade-up">
+        <p class="section-eyebrow">Quiénes somos</p>
+        <h2 class="section-title">Una maestra, <em>una vida</em> entera en el fique</h2>
+
+        <div class="fundadora-badges">
+          <span class="badge">Más de 30 años de oficio</span>
+          <span class="badge">Medalla a la Maestría Artesanal</span>
+          <span class="badge">Curití, Santander</span>
+        </div>
+
+        <p class="fundadora-text">
+          María Patrocinio Pimiento Ortiz aprendió a tejer cuando aún era una niña,
+          mirando las manos de su madre moverse entre fibras de fique. Con los años,
+          ese saber se fue volviendo suyo: más preciso, más libre, más hondo.
+        </p>
+        <p class="fundadora-text">
+          Fundó Areagua con la convicción de que cada pieza tejida es también un
+          acto de enseñanza. Sus alfombras y butacas llevan el color de la tierra
+          santandereana, los tintes del jardín y la paciencia de quien sabe que lo
+          bello no se puede apurar.
+        </p>
+
+        <blockquote class="pull-quote">
+          <p>
+            "Yo no solo tejo fique. Enseño a mis manos lo que mis abuelas le
+            enseñaron a las suyas. Eso es lo que quiero dejar."
+          </p>
+          <cite>— María Patrocinio Pimiento Ortiz, Fundadora de Areagua</cite>
+        </blockquote>
+
+        <p class="fundadora-text">
+          Ganadora de la Medalla a la Maestría Artesanal —el reconocimiento más
+          alto que entrega Artesanías de Colombia—, María Patrocinio sigue tejiendo
+          en Curití, rodeada de sus aprendices y del paisaje que inspira cada color.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="zigzag-divider inv" aria-hidden="true"></div>
+
+  <!-- ─── PRODUCTOS ─────────────────────────────────────────────────── -->
+  <section id="productos">
+    <div class="productos-header">
+      <div class="productos-intro fade-up">
+        <p class="section-eyebrow">Nuestras piezas</p>
+        <h2 class="section-title">Cada una es <em>única</em></h2>
+      </div>
+      <p class="section-body fade-up" style="max-width:340px; font-style:italic;">
+        Una selección de alfombras y butacas tejidas a mano en Curití.
+        Escríbenos por WhatsApp para ver disponibilidad o pedir un diseño personalizado.
+      </p>
+    </div>
+
+    <div class="productos-grid">
+      <!-- Product 1 -->
+      <div class="product-card fade-up" data-product="Alfombra Natural" data-desc="Tejida en fique sin teñir, mostrando el color natural de la fibra. Textura gruesa y resistente. Ideal para espacios de paso." data-tag="Fique natural · Sin tinte">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🟫</span>
+          <!-- <img src="alfombra-natural.jpg" alt="Alfombra de fique natural"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Alfombra · Fique natural</span>
+          <h3 class="product-card-name">Alfombra Natural</h3>
+          <p class="product-card-desc">Fibra sin teñir · Trenzado tradicional · Hecha a pedido</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card fade-up" data-product="Alfombra Tinturada — Tierras" data-desc="Teñida con tintes naturales de raíces y cortezas locales. Los tonos tierra varían según la temporada y el clima del día de tinturado." data-tag="Tinte natural · Tonos tierra">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🟤</span>
+          <!-- <img src="alfombra-tierra.jpg" alt="Alfombra tinturada tonos tierra"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Alfombra · Tinte vegetal</span>
+          <h3 class="product-card-name">Alfombra Tierras</h3>
+          <p class="product-card-desc">Tinte vegetal · Tonos cálidos · Diseño geométrico</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card fade-up" data-product="Butaca Individual" data-desc="Asiento individual tejido en fique sobre estructura firme. Perfecta para sala o corredor. Cada butaca lleva el patrón característico de Areagua." data-tag="Butaca · Tejido tradicional">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🪑</span>
+          <!-- <img src="butaca.jpg" alt="Butaca individual de fique"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Butaca · Fique y madera</span>
+          <h3 class="product-card-name">Butaca Individual</h3>
+          <p class="product-card-desc">Fique tejido sobre estructura · Patrón zigzag · Diseño único</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card fade-up" data-product="Alfombra Tinturada — Índigo" data-desc="Teñida en índigo natural siguiendo un proceso artesanal de varias jornadas. El azul profundo contrasta con el crema natural del fique." data-tag="Índigo natural · Pieza especial">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🔷</span>
+          <!-- <img src="alfombra-indigo.jpg" alt="Alfombra tinturada en índigo"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Alfombra · Índigo natural</span>
+          <h3 class="product-card-name">Alfombra Índigo</h3>
+          <p class="product-card-desc">Índigo natural · Pieza de colección · Edición limitada</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card fade-up" data-product="Alfombra Días Grises" data-desc="Tinturada en días nublados, cuando los tintes naturales producen grises suaves y negros velados. Cada pieza captura el tiempo de Curití." data-tag="Tinte natural · Tonos fríos">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🩶</span>
+          <!-- <img src="alfombra-gris.jpg" alt="Alfombra tinturada tonos grises"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Alfombra · Días de lluvia</span>
+          <h3 class="product-card-name">Alfombra Días Grises</h3>
+          <p class="product-card-desc">Tinte natural en día nublado · Grises y negros suaves · Pieza especial</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card fade-up" data-product="Butaca Tinturada" data-desc="Butaca individual con fique teñido en tintes vegetales rojos y ocres. La combinación de colores nace del jardín de la maestra Patrocinio." data-tag="Butaca · Tinte vegetal">
+        <div class="product-card-img">
+          <span class="product-placeholder-icon">🪑</span>
+          <!-- <img src="butaca-tinturada.jpg" alt="Butaca de fique tinturado"> -->
+          <div class="product-card-img-overlay"><span>Ver pieza</span></div>
+        </div>
+        <div class="product-card-body">
+          <span class="product-card-tag">Butaca · Tinte vegetal</span>
+          <h3 class="product-card-name">Butaca Tinturada</h3>
+          <p class="product-card-desc">Fique teñido en rojos y ocres · Patrón de rombos · Hecha a pedido</p>
+          <div class="product-card-cta">Consultar disponibilidad <span>→</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="productos-footer fade-up">
+      <p>Estas son solo algunas de las piezas que nacen en nuestro taller.<br>Cada diseño es único y muchos se hacen por encargo.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://instagram.com/areaguafique" target="_blank" rel="noopener" class="btn-primary">
+          Ver más en Instagram
+        </a>
+        <a href="https://wa.me/573000000000?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20las%20piezas%20de%20Areagua" target="_blank" rel="noopener" class="btn-secondary">
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="zigzag-divider dark" aria-hidden="true"></div>
+
+  <!-- ─── PROCESO ───────────────────────────────────────────────────── -->
+  <section id="proceso">
+    <div class="proceso-header fade-up">
+      <p class="section-eyebrow">El taller y su proceso</p>
+      <h2 class="section-title">Del campo al piso, <em>paso a paso</em></h2>
+      <p class="section-body" style="margin-top:.75rem;">
+        En Areagua nada es instantáneo. El fique llega desde la finca, pasa por las manos
+        de la maestra y se convierte en una pieza que dura décadas.
+      </p>
+    </div>
+
+    <div class="proceso-steps">
+      <div class="proceso-step fade-up">
+        <div class="proceso-step-icon">🌿</div>
+        <div class="proceso-step-content">
+          <p class="proceso-step-num">Paso 01</p>
+          <h3 class="proceso-step-title">Cosecha del fique</h3>
+          <p class="proceso-step-desc">Se cortan las pencas de fique cuando alcanzan su punto exacto de madurez, en las fincas de Curití y sus alrededores.</p>
+        </div>
+      </div>
+
+      <div class="proceso-step fade-up">
+        <div class="proceso-step-icon">🧵</div>
+        <div class="proceso-step-content">
+          <p class="proceso-step-num">Paso 02</p>
+          <h3 class="proceso-step-title">Desfibrado e hilado</h3>
+          <p class="proceso-step-desc">La penca se desfibra a mano o con descortezadora. Las fibras se secan al sol y luego se tuercen en hilos resistentes.</p>
+        </div>
+      </div>
+
+      <div class="proceso-step fade-up">
+        <div class="proceso-step-icon">🌱</div>
+        <div class="proceso-step-content">
+          <p class="proceso-step-num">Paso 03</p>
+          <h3 class="proceso-step-title">Tinturado con tintes naturales</h3>
+          <p class="proceso-step-desc">Los hilos se tiñen con plantas, raíces y cortezas. El resultado depende del clima: los días soleados dan colores vivos; los nublados, grises y negros.</p>
+        </div>
+      </div>
+
+      <div class="proceso-step fade-up">
+        <div class="proceso-step-icon">🪡</div>
+        <div class="proceso-step-content">
+          <p class="proceso-step-num">Paso 04</p>
+          <h3 class="proceso-step-title">Tejido a mano</h3>
+          <p class="proceso-step-desc">La maestra Patrocinio teje en el telar, siguiendo patrones geométricos heredados de generaciones, adaptando el diseño según la pieza.</p>
+        </div>
+      </div>
+
+      <div class="proceso-step fade-up">
+        <div class="proceso-step-icon">✨</div>
+        <div class="proceso-step-content">
+          <p class="proceso-step-num">Paso 05</p>
+          <h3 class="proceso-step-title">Pieza terminada</h3>
+          <p class="proceso-step-desc">La alfombra o butaca se revisa hilo por hilo. Cada pieza lleva el nombre del taller y la historia de las manos que la hicieron.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tinturado highlight callout -->
+    <div class="tinturado-callout fade-up">
+      <div class="tinturado-callout-text">
+        <p class="tinturado-eyebrow">El secreto del color</p>
+        <h3 class="tinturado-title">El clima también teje</h3>
+        <p class="tinturado-body">
+          En Areagua, los colores no salen de un frasco con etiqueta. Cada tinte se
+          prepara con plantas del jardín y del monte: hojas, cortezas, raíces. Pero
+          hay algo que ningún artesano puede controlar del todo: el tiempo que hace
+          ese día. El calor activa los pigmentos de forma distinta a la lluvia.
+          Por eso, dos piezas teñidas con la misma receta pueden salir de tonos
+          completamente distintos. Eso no es un error. Es la firma del lugar.
+        </p>
+      </div>
+      <div class="tinturado-quote">
+        <p>
+          "Los días soleados me dan colores vivos, brillantes. Pero los días grises...
+          esos me dan los negros y los grises más bonitos que he visto.
+          Esos días, el fique se pone serio."
+        </p>
+        <small>— María Patrocinio Pimiento Ortiz</small>
+      </div>
+    </div>
+  </section>
+
+  <div class="zigzag-divider" style="background-color:var(--fique-dark); background-image: linear-gradient(135deg,var(--crema) 25%,transparent 25%) -12px 0, linear-gradient(225deg,var(--crema) 25%,transparent 25%) -12px 0, linear-gradient(315deg,var(--crema) 25%,transparent 25%), linear-gradient(45deg,var(--crema) 25%,transparent 25%); background-size:24px 24px;" aria-hidden="true"></div>
+
+  <!-- ─── CONTACTO ───────────────────────────────────────────────────── -->
+  <section id="contacto">
+    <div class="contacto-grid">
+      <div class="contacto-info fade-up">
+        <p class="section-eyebrow">Agenda tu visita</p>
+        <h2 class="section-title" style="color:var(--beige);">Ven a <em>conocernos</em></h2>
+        <p>
+          El taller está en el corazón de Curití, Santander. Puedes venir a ver las
+          piezas en persona, conocer el proceso de tejido o encargar una alfombra
+          a tu medida. Escríbenos antes para coordinar tu visita.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <span>Carrera 11 # 8-20, Curití, Santander, Colombia</span>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <a href="tel:+573000000000">+57 300 000 0000</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <a href="mailto:areaguafique@gmail.com">areaguafique@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+              </svg>
+            </div>
+            <a href="https://instagram.com/areaguafique" target="_blank" rel="noopener">@areaguafique</a>
+          </div>
+        </div>
+
+        <div class="map-placeholder">
+          <span>🗺️</span>
+          <span>Aquí va el mapa de Google<br><small>Carrera 11 # 8-20, Curití, Santander</small></span>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="nombre">Tu nombre</label>
+            <input class="form-input" type="text" id="nombre" name="nombre" placeholder="¿Cómo te llamas?" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="correo">Correo electrónico</label>
+            <input class="form-input" type="email" id="correo" name="correo" placeholder="tu@correo.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="telefono">WhatsApp / Teléfono (opcional)</label>
+            <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+57 300 000 0000" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="mensaje">¿En qué te podemos ayudar?</label>
+            <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntanos qué estás buscando: visita al taller, consulta de productos, pedido especial..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Enviar mensaje</button>
+          <p id="formMsg" style="font-size:0.78rem;color:var(--beige-dark);display:none;margin-top:0.5rem;">
+            ✓ Mensaje enviado. Te responderemos pronto.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo-wordmark">areagua</div>
+        <div class="footer-logo-tagline">Manos con amor y tradición</div>
+        <p class="footer-brand-desc">
+          Taller artesanal de tejeduría en fique fundado por la maestra
+          María Patrocinio Pimiento Ortiz, ganadora de la Medalla a la Maestría Artesanal.
+          Alfombras y butacas tejidas a mano en Curití, Santander.
+        </p>
+        <div class="footer-social">
+          <a href="https://instagram.com/areaguafique" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+            </svg>
+          </a>
+          <a href="https://facebook.com/areaguafique" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/573000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <p class="footer-nav-title">Navegación</p>
+        <ul class="footer-nav-links" role="list">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Quiénes somos</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#proceso">Taller y proceso</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-contact-title">Contacto</p>
+        <div class="footer-contact-items">
+          <div class="footer-contact-item">📍 Carrera 11 # 8-20<br>Curití, Santander</div>
+          <div class="footer-contact-item">📱 <a href="tel:+573000000000" style="color:inherit">+57 300 000 0000</a></div>
+          <div class="footer-contact-item">📷 <a href="https://instagram.com/areaguafique" target="_blank" rel="noopener" style="color:inherit">@areaguafique</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-bottom-credit">Hecho a mano en Curití, Santander ·  Areagua</p>
+      <p class="footer-bottom-rights">© 2024 Areagua · Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- ─── WHATSAPP FLOATING BTN ──────────────────────────────────────── -->
+  <a href="https://wa.me/573000000000?text=Hola%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20las%20piezas%20de%20Areagua"
+     target="_blank" rel="noopener"
+     class="wa-float"
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ─── LIGHTBOX (product detail) ─────────────────────────────────── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Detalle del producto">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">✕</button>
+      <h3 id="lightboxName"></h3>
+      <span class="product-card-tag" id="lightboxTag" style="margin-bottom:1rem;display:inline-block;"></span>
+      <p id="lightboxDesc"></p>
+      <a id="lightboxWa" href="#" target="_blank" rel="noopener" class="btn-primary" style="width:100%;justify-content:center;">
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- ─── JAVASCRIPT ─────────────────────────────────────────────────── -->
+  <script>
+    // ── Navbar scroll shadow
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Hamburger / mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link, .mobile-cta');
+
+    function toggleMenu(open) {
+      hamburger.classList.toggle('open', open);
+      mobileMenu.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      toggleMenu(!mobileMenu.classList.contains('open'));
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // ── Scroll animations (IntersectionObserver)
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger siblings
+          const siblings = [...entry.target.parentElement.querySelectorAll('.fade-up')];
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    fadeEls.forEach(el => observer.observe(el));
+
+    // ── Product card lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxName = document.getElementById('lightboxName');
+    const lightboxDesc = document.getElementById('lightboxDesc');
+    const lightboxTag  = document.getElementById('lightboxTag');
+    const lightboxWa   = document.getElementById('lightboxWa');
+
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const name = card.dataset.product;
+        const desc = card.dataset.desc;
+        const tag  = card.dataset.tag;
+        lightboxName.textContent = name;
+        lightboxDesc.textContent = desc;
+        lightboxTag.textContent  = tag;
+        const msg = encodeURIComponent(`Hola, me interesa la pieza "${name}" de Areagua. ¿Está disponible?`);
+        lightboxWa.href = `https://wa.me/573000000000?text=${msg}`;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // ── Contact form (demo — no server)
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-submit');
+      btn.textContent = 'Enviando…';
+      btn.disabled = true;
+      setTimeout(() => {
+        document.getElementById('formMsg').style.display = 'block';
+        btn.textContent = 'Mensaje enviado ✓';
+        e.target.reset();
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
