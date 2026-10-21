@@ -1,0 +1,7 @@
+# Blueprint de Render: landing estática Areagua — Taller Artesanal
+services:
+  - type: web
+    name: areagua-taller
+    runtime: static
+    buildCommand: ''
+    staticPublishPath: ./
